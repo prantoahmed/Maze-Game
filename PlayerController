@@ -1,0 +1,56 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public Joystick joystickReference;
+    public ScoreTextController ScoreTextControllerReference;
+    public Rigidbody playerRigidbodyReference;
+
+
+    public float speed;
+
+    public float horizontalInput;
+    public float verticalInput;
+
+
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        horizontalInput = joystickReference.Horizontal; //Input.GetAxis("Horizontal");
+        verticalInput = joystickReference.Vertical;    //Input.GetAxis("Vertical");
+
+        playerRigidbodyReference.AddForce(new Vector3(horizontalInput * speed, 
+            0, 
+            verticalInput * speed));
+
+
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Tag_Coin")
+        {
+            Destroy(collision.gameObject);
+            ScoreTextControllerReference.AddCoin();
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Tag_Coin");
+        {
+            ScoreTextControllerReference.AddCoin();
+            Destroy(other.gameObject);
+
+        }
+    }
+}
