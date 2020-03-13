@@ -1,0 +1,48 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BasicAIController : MonoBehaviour
+{
+    public Transform target;
+    [Range(0f, 10f)]
+    public float forwardVelocity;
+    [Range(0f, 1f)]
+    public float angulerVelocity;
+
+    private Transform m_TransformReference;
+    private Vector3 m_ModifiedPosition;
+    private Quaternion m_LookDirection;
+    private Quaternion m_ModifiedRotation;
+    public float m_CurrentDistance;
+
+    private void Start()
+    {
+        m_TransformReference = transform;
+
+        //Debug.Log(m_TransformReference.position + " > " + target.position + " : " + m_CurrentDistance);
+    }
+
+    private void Update()
+    {
+        m_ModifiedPosition = Vector3.MoveTowards(
+                m_TransformReference.position,
+                target.position,
+                forwardVelocity * Time.deltaTime
+            );
+
+        m_TransformReference.position = m_ModifiedPosition;
+
+        m_CurrentDistance = Vector3.Distance(m_TransformReference.position, target.position);
+
+        m_LookDirection = Quaternion.LookRotation(target.position - m_TransformReference.position);
+
+        m_ModifiedRotation = Quaternion.Slerp(
+            m_TransformReference.rotation,
+            m_LookDirection,
+            angulerVelocity
+
+            );
+        m_TransformReference.rotation = m_ModifiedRotation;
+    }
+}
