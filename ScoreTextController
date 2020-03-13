@@ -1,0 +1,45 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+
+
+public class ScoreTextController : MonoBehaviour
+{
+    public TextMeshProUGUI scoreTextReference;
+
+    public int numberOfCoinToBeCollected;
+
+    public int numberOfCollectedCoin;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        numberOfCollectedCoin = 0;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void AddCoin()
+    {
+        numberOfCollectedCoin++;
+        if (numberOfCollectedCoin == numberOfCoinToBeCollected)
+        {
+            scoreTextReference.text = "You Win!";
+            Debug.Log("called You win");
+        }
+        else
+        {
+            scoreTextReference.text = "Score : " + numberOfCollectedCoin;
+            Debug.Log("called collected");
+        }
+
+    }
+}
+
+
