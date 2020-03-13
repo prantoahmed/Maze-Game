@@ -1,0 +1,27 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraController : MonoBehaviour
+{
+    public Transform playerTransformReference;
+    public Transform cameraTransformReference;
+
+    private Vector3 offset;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+     
+        offset = cameraTransformReference.position - playerTransformReference.position;
+        Debug.Log(offset);  
+    }
+
+
+    // Update is called once per frame
+    void LateUpdate()
+    {
+        cameraTransformReference.position = playerTransformReference.position + offset;
+    }
+}
